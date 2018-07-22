@@ -1,0 +1,43 @@
+PODS:
+  - Alamofire (4.7.1)
+  - AlamofireImage (3.3.1):
+    - Alamofire (~> 4.5)
+  - CRNotifications (1.1.3)
+  - ReSwift (4.0.1)
+  - RxCocoa (4.1.2):
+    - RxSwift (~> 4.0)
+  - RxKeyboard (0.8.1):
+    - RxCocoa (>= 4.0.0)
+    - RxSwift (>= 4.0.0)
+  - RxSwift (4.1.2)
+
+DEPENDENCIES:
+  - AlamofireImage
+  - CRNotifications
+  - ReSwift (~> 4.0)
+  - RxCocoa (~> 4.0)
+  - RxKeyboard
+  - RxSwift (~> 4.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AlamofireImage
+    - CRNotifications
+    - ReSwift
+    - RxCocoa
+    - RxKeyboard
+    - RxSwift
+
+SPEC CHECKSUMS:
+  Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
+  AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
+  CRNotifications: 887e7a676aa7b8f6684620f96618b6642c531394
+  ReSwift: f4012c613e13da7398827fe5aebdb938eaed40a3
+  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
+  RxKeyboard: 28d984440671becc75350b1dfae7ae08d31076df
+  RxSwift: e49536837d9901277638493ea537394d4b55f570
+
+PODFILE CHECKSUM: 95178b4527090ef5136c1345e4ab901a408ab476
+
+COCOAPODS: 1.5.3
