@@ -171,7 +171,10 @@ extension ProductDetailViewController: StoreSubscriber {
         
         title = state.name
         nameLabel.text = state.name
-        descriptionLabel.text = state.description
+        guard let data = (state.description).data(using: String.Encoding.unicode) else { return }
+        
+        try? descriptionLabel.attributedText = NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+
         priceLabel.text = "Price: \(state.price)"
         quantityLabel.text = "\(state.quantity)"
         canAddToBag = state.canAddToBag
