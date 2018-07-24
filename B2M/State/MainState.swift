@@ -28,6 +28,7 @@ struct MainState: StateType {
     var configurableAttributes: [ConfigurableAttribute] = []
     var canAddToBag: Bool = false
     var quantity: Int = 1
+    var fetchingData = false
 }
 
 func mainReducer(action: Action, state: MainState?) -> MainState {
@@ -42,7 +43,10 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
     case .fetchNextProductPages(let totalPages, let products):
         let values = products.filter({ product in !state.products.contains(where: { $0.id == product.id }) })
         state.productPages.addPage(totalPages: totalPages, values: values)
+        state.fetchingData = false
         
+    case .fetchingNextProductPages:
+        state.fetchingData = true
         
     case .willHideProductDetail(let product):
         state.productDetail = .willHide(product)
@@ -54,10 +58,25 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
         state.productDetail = .hide
     case .showProductDetail(let product):
         state.productDetail = .show(product)
+        
         if let configurableAttributes = product.configurableAttributes {
-            state.configurableAttributes = configurableAttributes
+            //MOCK Stock for specific size settings random stock size for an size option
+            state.configurableAttributes = configurableAttributes.map{ attribute in
+                var mutableAttribute = attribute
+                let options:[Option] = attribute.options!.map { (option: Option) in
+                    var mutableOption = option
+                    if option.isInStock == true {
+                        let randomNum:UInt32 = arc4random_uniform(10) + 1
+                        mutableOption.sizeInStock =  Int(randomNum)
+                    }
+                    return mutableOption
+                }
+                mutableAttribute.options = options
+                return mutableAttribute
+            }
+            //MOCK Stock for specific size settings random stock size for an size option
         }
-    case .optionSelected(let section, let row):
+    case .optionSelected(let section, let row, let notInStockCompletion):
         
         var options = state.configurableAttributes[section].options!
         
@@ -71,10 +90,23 @@ func mainReducer(action: Action, state: MainState?) -> MainState {
             
             options[row].selected = true
             state.configurableAttributes[section].options = options
+        } else {
+            notInStockCompletion()
         }
-    case .increaseQuantity:
+        
+        // if size changed change reset quantity
+        state.quantity = 1
+    case .increaseQuantity(let notEnoughCompletion):
+        
         //you can check quantity limitations via product json response
-        state.quantity = state.quantity + 1
+        if let option = (state.configurableAttributes[0].options!.filter{$0.selected == true}.first) {
+            if state.quantity < option.sizeInStock {
+                state.quantity = state.quantity + 1
+            } else {
+                notEnoughCompletion()
+            }
+        }
+        
     case .decreaseQuantity:
         //you can check quantity limitations via product json response if it can not exceed 5 you shouldnt etc.
         if state.quantity > 1 {

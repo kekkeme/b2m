@@ -11,12 +11,13 @@ import ReSwift
 enum MainStateAction: Action {
     
     case fetchNextProductPages(totalPages: Int, products: [Product])
+    case fetchingNextProductPages
     
     case showProductDetail(Product)
     case willHideProductDetail(Product)
     case hideProductDetail
-    case optionSelected(Int, Int)
-    case increaseQuantity
+    case optionSelected(Int, Int, () -> Void  )
+    case increaseQuantity(() -> Void)
     case decreaseQuantity
     case addToBag(Product)
 }

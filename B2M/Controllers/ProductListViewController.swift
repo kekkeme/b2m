@@ -13,9 +13,9 @@ import ReSwift
 import RxCocoa
 import RxSwift
 import AlamofireImage
+import UILoadControl
 
-
-class ProductListViewController: UIViewController {
+class ProductListViewController: UIViewController, UIScrollViewDelegate {
     
     var products: [Product] = []
     
@@ -25,24 +25,26 @@ class ProductListViewController: UIViewController {
         didSet {
             productsTableView.backgroundView = UIView()
             productsTableView.backgroundView?.backgroundColor = productsTableView.backgroundColor
+            productsTableView.loadControl = UILoadControl(target: self, action: #selector(loadMore(sender:)))
             
             productsTableView.rx.itemSelected
                 .map { self.products[$0.row] }
                 .map(MainStateAction.showProductDetail)
                 .bind(onNext: mainStore.dispatch)
                 .disposed(by: disposeBag)
-            
-            productsTableView.rx.willDisplayCell
-                .filter { $1.row == mainStore.state.products.count - 1 }
-                .map { _ in fetchNextProductPages }
-                .bind(onNext: mainStore.dispatch)
-                .disposed(by: disposeBag)
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.loadControl?.update()
+    }
+    
+    @objc func loadMore(sender: AnyObject?) {
+        mainStore.dispatch(fetchNextProductPages)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,7 +88,10 @@ class ProductListTableViewCell: UITableViewCell {
             }
             
             nameLabel.text = product.name
-            descriptionLabel.text = product.description ?? ""
+            guard let data = (product.description ?? "").data(using: String.Encoding.unicode) else { return }
+            
+            try? descriptionLabel.attributedText = NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+
             priceLabel.text = "Price: \(product.price ?? 0)"
         }
     }
@@ -102,6 +107,10 @@ extension ProductListViewController: StoreSubscriber {
         
         if case .show = state.productDetail {
             self.performSegue(withIdentifier: Views.showProductDetailViewController, sender: nil)
+        }
+        
+        if state.fetchingData == false {
+            self.productsTableView.loadControl?.endLoading()
         }
     }
 }

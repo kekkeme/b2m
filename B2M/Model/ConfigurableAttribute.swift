@@ -14,6 +14,7 @@ struct Option: Codable {
     let simpleProductSkus: [String]?
     let isInStock: Bool
     var selected: Bool = false
+    var sizeInStock: Int = 0
     
     private enum CodingKeys: String, CodingKey {
         case optionId

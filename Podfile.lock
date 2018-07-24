@@ -10,6 +10,7 @@ PODS:
     - RxCocoa (>= 4.0.0)
     - RxSwift (>= 4.0.0)
   - RxSwift (4.1.2)
+  - UILoadControl (2.1.0)
 
 DEPENDENCIES:
   - AlamofireImage
@@ -18,6 +19,7 @@ DEPENDENCIES:
   - RxCocoa (~> 4.0)
   - RxKeyboard
   - RxSwift (~> 4.0)
+  - UILoadControl
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -28,6 +30,7 @@ SPEC REPOS:
     - RxCocoa
     - RxKeyboard
     - RxSwift
+    - UILoadControl
 
 SPEC CHECKSUMS:
   Alamofire: 68d7d521118d49c615a8d2214d87cdf525599d30
@@ -37,7 +40,8 @@ SPEC CHECKSUMS:
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxKeyboard: 28d984440671becc75350b1dfae7ae08d31076df
   RxSwift: e49536837d9901277638493ea537394d4b55f570
+  UILoadControl: e742ddbe4c67ba1f13b00b7d462d4141307d021f
 
-PODFILE CHECKSUM: 95178b4527090ef5136c1345e4ab901a408ab476
+PODFILE CHECKSUM: 7628d4a5601f2e9ccee77a949331628ff883a088
 
 COCOAPODS: 1.5.3

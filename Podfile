@@ -8,6 +8,7 @@ use_frameworks!
 def all_pods
 
 pod 'ReSwift', '~> 4.0' 
+pod 'UILoadControl'
 
 # Reactive pods
 pod 'RxSwift', '~> 4.0'
@@ -21,6 +22,10 @@ pod 'CRNotifications'
 end
 
 target "B2M" do
+	all_pods
+end
+
+target "B2MTests" do
 	all_pods
 end
 

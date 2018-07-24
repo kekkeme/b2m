@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D405C7690475BCDF2E0DAE13F567186E"
-               BlueprintName = "RxSwift"
+               BlueprintIdentifier = "983D8490CD79E8BBD4D26DAE4250DFA5"
+               BlueprintName = "UILoadControl"
                ReferencedContainer = "container:Pods.xcodeproj"
-               BuildableName = "RxSwift.framework">
+               BuildableName = "UILoadControl.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

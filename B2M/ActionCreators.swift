@@ -10,7 +10,11 @@ import ReSwift
 
 fileprivate func fetchNextUpcomingProductsPage(state: MainState, store: Store<MainState>) -> Action? {
     guard !state.productPages.isComplete else { return nil }
-    
+    DispatchQueue.main.async {
+        mainStore.dispatch(
+            MainStateAction.fetchingNextProductPages
+        )
+    }
     ProductDB().fetchProducts(page: mainStore.state.productPages.currentPage + 1) { result in
         guard let result = result else { return }
         

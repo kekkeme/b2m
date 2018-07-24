@@ -21,6 +21,7 @@ class ProductDetailViewController: UIViewController {
     @IBOutlet weak var quantityLabel: UILabel!
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var addToBagButton: UIButton!
+    @IBOutlet weak var skuLabel: UILabel!
     
     private let productImageViewHeight: CGFloat = 500
     private var productView: UIView!
@@ -32,15 +33,28 @@ class ProductDetailViewController: UIViewController {
         if case let .show(product) = mainStore.state.productDetail {
             mainStore.dispatch(MainStateAction.addToBag(product))
         }
-    
     }
     
     @IBAction func decreaseQuantityButtonPressed(_ sender: Any) {
+        
+        guard let _ = (configurableAttributes[0].options!.filter{$0.selected == true}.first) else {
+           CRNotifications.showNotification(type: .error, title: NSLocalizedString("Please select size", comment: ""), message:  NSLocalizedString("First you must select appropriate size to change quantity", comment: ""), dismissDelay: 3)
+           return
+        }
+        
         mainStore.dispatch(MainStateAction.decreaseQuantity)
     }
     
     @IBAction func increaseQuantityButtonPressed(_ sender: Any) {
-        mainStore.dispatch(MainStateAction.increaseQuantity)
+        
+        guard let _ = (configurableAttributes[0].options!.filter{$0.selected == true}.first) else {
+            CRNotifications.showNotification(type: .error, title: NSLocalizedString("Please select size", comment: ""), message:  NSLocalizedString("First you must select appropriate size to change quantity", comment: ""), dismissDelay: 3)
+            return
+        }
+        
+        mainStore.dispatch(MainStateAction.increaseQuantity({
+            CRNotifications.showNotification(type: .error, title: NSLocalizedString("Not enough", comment: ""), message:  NSLocalizedString("We dont have more than that quantity", comment: ""), dismissDelay: 3)
+        }))
     }
     
     @IBOutlet weak var categorySizeTableView: UITableView! {
@@ -50,7 +64,9 @@ class ProductDetailViewController: UIViewController {
             
             categorySizeTableView.rx.itemSelected
                 .map { item in
-                    return (item.section, item.row)
+                    return (item.section, item.row, {
+                            CRNotifications.showNotification(type: .error, title: NSLocalizedString("Not in stock", comment: ""), message:  NSLocalizedString("We dont have enough stock for that option", comment: ""), dismissDelay: 3)
+                        })
                 }
                 .map(MainStateAction.optionSelected)
                 .bind(onNext: mainStore.dispatch)
@@ -139,8 +155,12 @@ extension ProductDetailViewController: StoreSubscriber {
             return
         }
         
+        skuLabel.text = ""
         if let configurableAttributes = state.configurableAttributes {
            self.configurableAttributes = configurableAttributes
+            if let option = (self.configurableAttributes[0].options!.filter{$0.selected == true}.first) {
+                skuLabel.text = option.simpleProductSkus![0]
+            }
         }
         
         title = state.name
@@ -180,7 +200,7 @@ class OptionTableViewCell: UITableViewCell {
         didSet {
             
             guard let option = option else { return }
-            nameLabel.text = option.label ?? ""
+            
             nameLabel.textColor = UIColor.b2mGrayColor()
             if option.selected == true {
                 nameLabel.textColor = UIColor.b2mBlackColor()
@@ -188,6 +208,8 @@ class OptionTableViewCell: UITableViewCell {
             
             if option.isInStock == false {
                 nameLabel.text = "\(option.label ?? "") Not in stock"
+            } else {
+                nameLabel.text = "\(option.label ?? "") (\(option.sizeInStock))" 
             }
         }
     }

@@ -12,9 +12,11 @@ struct ProductListViewState {
     let products: [Product]
     
     let productDetail: ProductDetailState
+    let fetchingData: Bool
 
     init(_ state: MainState) {
         products = state.products
         productDetail = state.productDetail
+        fetchingData = state.fetchingData
     }
 }
