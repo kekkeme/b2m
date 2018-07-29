@@ -32,7 +32,7 @@ class ProductDetailViewController: UIViewController {
     
     @IBAction func addToBagButtonPressed(_ sender: Any) {
         guard canAddToBag == true else {
-            CRNotifications.showNotification(type: .error, title: NSLocalizedString("Please select size", comment: ""), message:  NSLocalizedString("You must select size for adding to bag", comment: ""), dismissDelay: 3)
+            NotificationViewer.mustSelectSizeToAddBag()
             return
         }
         
@@ -44,7 +44,7 @@ class ProductDetailViewController: UIViewController {
     @IBAction func decreaseQuantityButtonPressed(_ sender: Any) {
         
         guard let _ = (configurableAttributes[0].options!.filter{$0.selected == true}.first) else {
-            CRNotifications.showNotification(type: .error, title: NSLocalizedString("Please select size", comment: ""), message:  NSLocalizedString("First you must select appropriate size to change quantity", comment: ""), dismissDelay: 3)
+            NotificationViewer.mustSelectSizeToAddBag()
             return
         }
         
@@ -54,12 +54,12 @@ class ProductDetailViewController: UIViewController {
     @IBAction func increaseQuantityButtonPressed(_ sender: Any) {
         
         guard let _ = (configurableAttributes[0].options!.filter{$0.selected == true}.first) else {
-            CRNotifications.showNotification(type: .error, title: NSLocalizedString("Please select size", comment: ""), message:  NSLocalizedString("First you must select appropriate size to change quantity", comment: ""), dismissDelay: 3)
+            NotificationViewer.mustSelectSizeToAddBag()
             return
         }
         
         mainStore.dispatch(MainStateAction.increaseQuantity({
-            CRNotifications.showNotification(type: .error, title: NSLocalizedString("Not enough", comment: ""), message:  NSLocalizedString("We dont have more than that quantity", comment: ""), dismissDelay: 3)
+            NotificationViewer.notEnoughQuantityToIncrease()
         }))
     }
     
@@ -71,7 +71,7 @@ class ProductDetailViewController: UIViewController {
             categorySizeTableView.rx.itemSelected
                 .map { item in
                     return (item.section, item.row, {
-                        CRNotifications.showNotification(type: .error, title: NSLocalizedString("Not in stock", comment: ""), message:  NSLocalizedString("We dont have enough stock for that option", comment: ""), dismissDelay: 3)
+                        NotificationViewer.dontHaveStockForOption()
                     })
                 }
                 .map(MainStateAction.optionSelected)
@@ -91,7 +91,6 @@ class ProductDetailViewController: UIViewController {
         
         setupProductView()
         updateProductView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -156,7 +155,7 @@ extension ProductDetailViewController: StoreSubscriber {
     func newState(state: ProductDetailViewState) {
         
         if case .productAdded = state.productDetail {
-            CRNotifications.showNotification(type: .success, title: NSLocalizedString("Production", comment: ""), message:  NSLocalizedString("You production successfully added to bag", comment: ""), dismissDelay: 3)
+            NotificationViewer.productSuccessfullyAddedToBag()
             self.navigationController?.popViewController(animated: true)
             return
         }
@@ -184,18 +183,7 @@ extension ProductDetailViewController: StoreSubscriber {
             addToBagButton.setTitleColor(UIColor.b2mGrayColor(), for: .normal)
         }
         
-        if let product = state.product {
-            if let imageUrl = product.smallImage {
-                let urlString = "https://prod4.atgcdn.ae/small_light(p=listing2x,of=webp)/pub/media/catalog/product/\(imageUrl)"
-                let url = URL(string: urlString)!
-                let placeholderImage = UIImage(named: Constant.dummyPlaceholder)
-                productImageView.af_setImage(withURL:url, placeholderImage: placeholderImage)
-            } else {
-                productImageView.image = UIImage(named:Constant.dummyPlaceholder)
-            }
-        } else {
-            productImageView.image = UIImage(named:Constant.dummyPlaceholder)
-        }
+        productImageView.setProductImage(product: state.product)
         
         categorySizeTableView.reloadData()
     }

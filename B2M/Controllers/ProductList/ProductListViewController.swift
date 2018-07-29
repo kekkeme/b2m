@@ -62,6 +62,7 @@ class ProductListViewController: UIViewController, UIScrollViewDelegate {
 
 
 class ProductListTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var productImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -78,14 +79,7 @@ class ProductListTableViewCell: UITableViewCell {
             
             guard let product = product else { return }
             
-            if let imageUrl = product.smallImage {
-                let urlString = "https://prod4.atgcdn.ae/small_light(p=listing2x,of=webp)/pub/media/catalog/product/\(imageUrl)"
-                let url = URL(string: urlString)!
-                let placeholderImage = UIImage(named: Constant.dummyPlaceholder)
-                productImageView.af_setImage(withURL:url, placeholderImage: placeholderImage)
-            } else {
-                productImageView.image = UIImage(named:Constant.dummyPlaceholder)
-            }
+            productImageView.setProductImage(product: product)
             
             nameLabel.text = product.name
             guard let data = (product.description ?? "").data(using: String.Encoding.unicode) else { return }

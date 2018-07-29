@@ -355,6 +355,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Syw-7K-if7">
                                 <rect key="frame" x="0.0" y="597" width="375" height="70"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cr9-1T-Cbw">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="rw2-zp-TmU"/>
+                                        </constraints>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b0D-B3-dwU">
                                         <rect key="frame" x="255" y="10" width="100" height="50"/>
                                         <constraints>
@@ -405,7 +412,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstItem="cr9-1T-Cbw" firstAttribute="leading" secondItem="Syw-7K-if7" secondAttribute="leading" id="9Zl-ct-AuK"/>
+                                    <constraint firstAttribute="trailing" secondItem="cr9-1T-Cbw" secondAttribute="trailing" id="J8k-Ju-Se8"/>
                                     <constraint firstAttribute="trailing" secondItem="b0D-B3-dwU" secondAttribute="trailing" constant="20" id="O8l-YT-GA3"/>
+                                    <constraint firstItem="cr9-1T-Cbw" firstAttribute="top" secondItem="Syw-7K-if7" secondAttribute="top" id="UJn-iS-UVS"/>
                                     <constraint firstItem="b0D-B3-dwU" firstAttribute="centerY" secondItem="Syw-7K-if7" secondAttribute="centerY" id="Yc1-d8-UpJ"/>
                                     <constraint firstAttribute="height" constant="70" id="k2m-xd-2su"/>
                                     <constraint firstAttribute="bottom" secondItem="SsN-SD-RTc" secondAttribute="bottom" id="lpW-Gf-Fw3"/>

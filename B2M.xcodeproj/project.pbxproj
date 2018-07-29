@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E35EEAD2109F80E006F2589 /* UIImageView+B2M.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E35EEAC2109F80E006F2589 /* UIImageView+B2M.swift */; };
+		2E35EEAF2109F8EF006F2589 /* NotificationViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E35EEAE2109F8EF006F2589 /* NotificationViewer.swift */; };
 		2EC213E521076D8600683C8D /* B2MTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC213E421076D8600683C8D /* B2MTests.swift */; };
 		2EC213ED21076DA000683C8D /* MainStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EC213EC21076DA000683C8D /* MainStateTests.swift */; };
 		2ED30410210472460078ACE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED3040F210472460078ACE5 /* AppDelegate.swift */; };
@@ -44,6 +46,8 @@
 
 /* Begin PBXFileReference section */
 		2A3B477EDB2A2D5D746DBA35 /* Pods_B2MTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_B2MTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E35EEAC2109F80E006F2589 /* UIImageView+B2M.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+B2M.swift"; sourceTree = "<group>"; };
+		2E35EEAE2109F8EF006F2589 /* NotificationViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewer.swift; sourceTree = "<group>"; };
 		2EC213E221076D8600683C8D /* B2MTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = B2MTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC213E421076D8600683C8D /* B2MTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = B2MTests.swift; sourceTree = "<group>"; };
 		2EC213E621076D8600683C8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -96,6 +100,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E35EEAA2109F751006F2589 /* ProductList */ = {
+			isa = PBXGroup;
+			children = (
+				2ED30423210482650078ACE5 /* ProductListViewController.swift */,
+			);
+			path = ProductList;
+			sourceTree = "<group>";
+		};
+		2E35EEAB2109F75A006F2589 /* ProductDetail */ = {
+			isa = PBXGroup;
+			children = (
+				2ED3044221049C300078ACE5 /* ProductDetailViewController.swift */,
+			);
+			path = ProductDetail;
+			sourceTree = "<group>";
+		};
 		2EC213E321076D8600683C8D /* B2MTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,8 +171,8 @@
 		2ED30422210482510078ACE5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2ED30423210482650078ACE5 /* ProductListViewController.swift */,
-				2ED3044221049C300078ACE5 /* ProductDetailViewController.swift */,
+				2E35EEAB2109F75A006F2589 /* ProductDetail */,
+				2E35EEAA2109F751006F2589 /* ProductList */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -205,6 +225,8 @@
 			isa = PBXGroup;
 			children = (
 				2ED304462104CD850078ACE5 /* UIColor+B2m.swift */,
+				2E35EEAC2109F80E006F2589 /* UIImageView+B2M.swift */,
+				2E35EEAE2109F8EF006F2589 /* NotificationViewer.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -463,11 +485,13 @@
 				2ED3044321049C300078ACE5 /* ProductDetailViewController.swift in Sources */,
 				2ED30424210482650078ACE5 /* ProductListViewController.swift in Sources */,
 				2ED30427210482AB0078ACE5 /* Product.swift in Sources */,
+				2E35EEAD2109F80E006F2589 /* UIImageView+B2M.swift in Sources */,
 				2ED304452104B75D0078ACE5 /* ConfigurableAttribute.swift in Sources */,
 				2ED30435210488090078ACE5 /* ProductListViewState.swift in Sources */,
 				2ED30412210472460078ACE5 /* ViewController.swift in Sources */,
 				2ED30439210488A90078ACE5 /* ActionCreators.swift in Sources */,
 				2ED30410210472460078ACE5 /* AppDelegate.swift in Sources */,
+				2E35EEAF2109F8EF006F2589 /* NotificationViewer.swift in Sources */,
 				2ED3042A210483CF0078ACE5 /* ProductDB.swift in Sources */,
 				2ED3043E210495670078ACE5 /* Constant.swift in Sources */,
 			);
