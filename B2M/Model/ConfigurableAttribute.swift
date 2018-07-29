@@ -12,7 +12,7 @@ struct Option: Codable {
     let optionId: Int?
     let label: String?
     let simpleProductSkus: [String]?
-    let isInStock: Bool
+    let isInStock: Bool?
     var selected: Bool = false
     var sizeInStock: Int = 0
     
